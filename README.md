@@ -95,7 +95,7 @@ After compiling the code of the toolbox and getting the executable file "KOL", w
 >>KOL -i training_dataset -opt algorithm_name [parameter setting]
 
 KOL is the name of the executable file we got from compiling the code. -i training_dataset is a necessary input indicating the training dataset name. -opt algorithm_name is another necessary input indicating the selected algorithm for learning. Parameter setting is also optional and diverses among different algorithms. If not indicated, the algorithm will use default setting.
-
+_________________________________________________________________
 A quick example:
 
 We may download the a9a datasets and perform the online kernel learning using the perceptron algorithm. We try the following command line:
@@ -113,6 +113,8 @@ Parameter Setting:
 ________________________________________
 Related links:
 
+Our C++ toolbox for online single kernel learning: https://github.com/LIBOL/KOL
+
 Steven Hoi's home page: http://stevenhoi.org/
 
 LU Jing's home page: http://jingonline.weebly.com/
@@ -126,9 +128,5 @@ Eigen: http://eigen.tuxfamily.org/index.php?title=Main_Page
 LIBSVM: https://www.csie.ntu.edu.tw/~cjlin/libsvm/
 
 Journal of Machine Learning Reseaerch: http://jmlr.org/papers/v17/14-148.html
-
-Our Matlab codes for all experiments in the research paper:https://github.com/jingcoco/Online-Kernel-Learning
-
-Our follow-up research in online multiple kernel learning:
 
 A follow-up work to our proposed algorithm in NIPS: https://papers.nips.cc/paper/6560-dual-space-gradient-descent-for-online-learning.pdf
