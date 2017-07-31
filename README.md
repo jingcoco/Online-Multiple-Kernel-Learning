@@ -11,9 +11,56 @@ ___________________________________________________________
 
 The algorithms in this package includes:
 
-1. kernel-dd the 
+1. kernel-dd, the deterministic online multiple kernel learning algorithm, no budget, Hedge combination.
 
+2. kernel-ddave, the deterministic online multiple kernel learning algorithm, no budget, simple uniform combination.
 
+3.kernel-sd, the stochastic-update algorithm for online multiple kernel learning algorithm, no budget, hedge combination.
+
+http://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=3294&context=sis_research
+
+4. kerne-single, single kernel online learning, perceptron.
+
+http://cseweb.ucsd.edu/~yfreund/papers/LargeMarginsUsingPerceptron.pdf
+
+5. kernel-ddpa, kernel-sdpa,
+
+The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in PA mode.
+
+http://jmlr.csail.mit.edu/papers/volume7/crammer06a/crammer06a.pdf
+
+5. kernel-bogd, kernel-bogd_sd
+
+The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in BOGD mode
+
+http://arxiv.org/ftp/arxiv/papers/1206/1206.4633.pdf
+
+6. kernel-rbp, kernel-rbp_sd
+
+The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in rbp mode
+
+http://air.unimi.it/bitstream/2434/26350/1/J29.pdf
+
+7. kernel-bpas, kernel-bpas_sd
+
+The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in bpas mode.
+
+http://machinelearning.wustl.edu/mlpapers/paper_files/AISTATS2010_WangV10.pdf
+
+8. kernel-forgetron, kernel-forgetron_sd
+
+The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in forgetron mode.
+
+http://papers.nips.cc/paper/2806-the-forgetron-a-kernel-based-perceptron-on-a-fixed-budget.pdf
+
+9. kernel-fogd. The proposed multiple kernel fourier gradient descent algorithm. Hedge Combination
+
+ http://jmlr.org/papers/v17/14-148.html
+
+10. kernel-nogd. The proposed multiple kernel Nystrom gradient descent algorithm
+
+ http://jmlr.org/papers/v17/14-148.html
+ 
 _____________________________________________________________
 If you need to use this code package, please cite our paper as:
 
@@ -23,8 +70,12 @@ or bib:
 
 @article{lu2016large, title={Large scale online kernel learning}, author={Lu, Jing and Hoi, Steven CH and Wang, Jialei and Zhao, Peilin and Liu, Zhi-Yong}, journal={Journal of Machine Learning Research}, volume={17}, number={47}, pages={1}, year={2016}, publisher={Journal of Machine Learning Research/Microtome Publishing} }
 ______________________________________________________________
-To get started, please refer to the file install.pdf, which provide a detailed step-by-step guide on the installation of this package. Before it, an Eigen package is needed (http://eigen.tuxfamily.org/index.php?title=Main_Page). After building, we get an executable file KOL and use it in command line.
 
+Installation
+
+The installation is the same as our KOL project. Refer to this for details. https://github.com/LIBOL/KOL
+After building, we get an executable file KOL and use it in command line.
+_____________________________________________________________
 Prepare for the input data
 
 We use the LIBSVM dataset formate, which is an effcient sparse data representation as input. Each instance in the dataset is represented by a row of numbers ended by "\n". For example:
@@ -36,84 +87,30 @@ We use the LIBSVM dataset formate, which is an effcient sparse data representati
 In the above dataset, there are 2 instances stored in two rows. Each row begins with the class label of this instance. In binary classification the label appears in two forms: {+1, -1}. Note that some dataset files might be labeled with {0, 1}, which is not allowed by our toolbox. They have to be preprocessed and transformed to the {-1,+1} formate. Following the label, the feature values appears in form feature_index:feature_value. This is a sparse feature representation. If one certain feature index does not appear, it indicates that its value is zero.
 
 Our toolbox is well designed to follow the standard online learning setting and load the dataset sequentially. So there is no memory limitation at all for large scale datasets. Users are not required to input the feature dimension of the dataset before training, since the algorithm will automaticly adjust to the increase of feature dimension.
-
+___________________________________________________________
 Command Line
 
 After compiling the code of the toolbox and getting the executable file "KOL", we can use command line mode to run the algorithms:
 
-KOL -i training_dataset [-t testing_dataset] -opt algorithm_name [parameter setting]
-KOL is the name of the executable file we got from compiling the code. -i training_dataset is a necessary input indicating the training dataset name. -opt algorithm_name is another necessary input indicating the selected algorithm for learning. -t testing_dataset is an optional input indicating the testing dataset name. If not indicated, the algorithm will only conduct the training process and output the online training accuracy and time cost. Parameter setting is also optional and diverses among different algorithms. If not indicated, the algorithm will use default setting.
+>>KOL -i training_dataset -opt algorithm_name [parameter setting]
+
+KOL is the name of the executable file we got from compiling the code. -i training_dataset is a necessary input indicating the training dataset name. -opt algorithm_name is another necessary input indicating the selected algorithm for learning. Parameter setting is also optional and diverses among different algorithms. If not indicated, the algorithm will use default setting.
 
 A quick example:
 
 We may download the a9a datasets and perform the online kernel learning using the perceptron algorithm. We try the following command line:
 
-KOL -i a9a_train -t a9a_test -opt kernel-perceptron
+>>KOL -i a9a_train -opt kernel-dd
+
 The ourput is as followings:
 
-Algorithm: kernel_perceptron
 
-0	10000	20000	30000
 
-#Training Instances:32561
-
-Learn acuracy: 78.851997%
-
-#SV:6887
-
-Learning time: 10.218000 s
-
-Test acuracy: 70.738899 %
-
-Test time: 9.766000 s
-
-The second line indicates the number of processed training samples until now, which can give an intuitive impression of the processing speed. This is a necessary output in the case when the training time is extremely long. The output includes the training accuracy, training time cost (including loading time), the number of support vectors, test accuracy and test time (including loading time).
-
+The second line indicates the number of processed training samples until now, which can give an intuitive impression of the processing speed. This is a necessary output in the case when the training time is extremely long. The output includes the training accuracy, training time cost (including loading time), test time (including loading time).
+_________________________________________
 Parameter Setting:
 
-Each algorithm has its own set of parameters. We will give detailed explainations about the useage of each algorithm.
-
-parameter command line default value
-
-the gaussian width parameter for gaussian kernel exp(-\gamma||x-y||_2^2) -gamma gamma=0.01
-
-budget size for all budget algorithms, the max number of support vectors -B B=100
-
-the learning rate for gradient descent based algorithms -eta eta= 0.5
-
-the regularizer parameter for bogd -lambda gamma=0.01
-
-For parameters specially for some algorithms, we will introduce with the following examples:
-
-Perceptron:
-KOL -i a9a_train -t a9a_test -opt kernel-perceptron -gamma 0.1
-OGD:
-KOL -i a9a_train -t a9a_test -opt kernel-ogd -eta 0.1 -gamma 0.01
-RBP
-KOL -i a9a_train -t a9a_test -opt kernel-rbp -B 300
-Kernel-forgetron
-KOL -i a9a_train -t a9a_test -opt kernel-forgetron -B 300 -gamma 0.01
-Kernel-projectron
-KOL -i a9a_train -t a9a_test -opt kernel-projectron -B 300
-Kernel-projectronpp
-KOL -i a9a_train -t a9a_test -opt kernel-projectronpp -B 300 -gamma 0.01
-Kernel-bpas
-KOL -i a9a_train -t a9a_test -opt kernel-bpas -B 300 -cbpas 1 -gamma 0.01
-Note that the parameter cbpas is the weight paramter C, which controls the step size. default value is 1.
-
-8: BOGD
-
-KOL -i a9a_train -opt kernel-bogd -B 300 -lambda 0.1 -eta 0.1 -gamma 0.01
-9: FOGD
-
-KOL -i a9a_train -opt kernel-fogd -D 400 -eta 0.001 -gamma 0.001
-Note that the parameter D is the number of fourier components for the FOGD algorithm. default value is 400
-
-10: NOGD
-
-KOL -i a9a_train -opt kernel-nogd -knogd 30 -eta 0.1 -eta1 0.3 -gamma 0.01 -B 300
-Note that the parameter -knogd is the matrix rank for SVD. default value 20. The eta is the kernel step size and eta1 is the linear step size, both with 0.5 default value.
-
+________________________________________
 Related links:
 
 Steven Hoi's home page: http://stevenhoi.org/
