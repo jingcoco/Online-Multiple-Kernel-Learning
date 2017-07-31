@@ -4,14 +4,14 @@ Authors: Lu Jing, Wu Yue, Steven Hoi
 
 Contact: chhoi@ntu.edu.sg, jing.lu.2014@phdis.smu.edu.sg
 
-This is a package for solving large scale online multiple kernel learning tasks. The current version is in C++ and has a group of online multiple kernel learning algorithm for binary classification, which are all widely used in online kernel learning research. 
+This is a package for solving large scale online multiple kernel learning tasks. The current version is in C++ and has a group of online multiple kernel learning algorithm for binary classification, which are all widely used in online kernel learning research. This is a part of my phd thesis.
 
 This is a follow-up work for our research paper "large scale online kernel learning" in JMLR that deals with single kernel learning tasks. For details about the single kernel learning algorithms, please refer to https://github.com/LIBOL/KOL
 ___________________________________________________________
 
-
-
 The algorithms in this package includes:
+
+1. kernel-dd the 
 
 
 _____________________________________________________________
