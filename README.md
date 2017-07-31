@@ -16,35 +16,29 @@ The algorithms in this package includes:
 2. kernel-ddave, the deterministic online multiple kernel learning algorithm, no budget, simple uniform combination.
 
 3.kernel-sd, the stochastic-update algorithm for online multiple kernel learning algorithm, no budget, hedge combination.
-
 http://ink.library.smu.edu.sg/cgi/viewcontent.cgi?article=3294&context=sis_research
 
 4. kerne-single, single kernel online learning, perceptron.
-
 http://cseweb.ucsd.edu/~yfreund/papers/LargeMarginsUsingPerceptron.pdf
 
 5. kernel-ddpa, kernel-sdpa,
 
 The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in PA mode.
-
 http://jmlr.csail.mit.edu/papers/volume7/crammer06a/crammer06a.pdf
 
 5. kernel-bogd, kernel-bogd_sd
 
 The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in BOGD mode
-
 http://arxiv.org/ftp/arxiv/papers/1206/1206.4633.pdf
 
 6. kernel-rbp, kernel-rbp_sd
 
 The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in rbp mode
-
 http://air.unimi.it/bitstream/2434/26350/1/J29.pdf
 
 7. kernel-bpas, kernel-bpas_sd
 
 The deterministic online multiple kernel learning algorithm and the stochastic-update algorithm for online multiple kernel learning algorithm. Hedge combination. Each component classifier is updated in bpas mode.
-
 http://machinelearning.wustl.edu/mlpapers/paper_files/AISTATS2010_WangV10.pdf
 
 8. kernel-forgetron, kernel-forgetron_sd
@@ -60,6 +54,10 @@ http://papers.nips.cc/paper/2806-the-forgetron-a-kernel-based-perceptron-on-a-fi
 10. kernel-nogd. The proposed multiple kernel Nystrom gradient descent algorithm
 
  http://jmlr.org/papers/v17/14-148.html
+ 
+11. kernel-spasd The sparse passive aggressive algorithm for multiple kernel learning.
+
+http://jingonline.weebly.com/uploads/5/3/7/3/53733905/spa.pdf
  
 _____________________________________________________________
 If you need to use this code package, please cite our paper as:
@@ -104,11 +102,34 @@ We may download the a9a datasets and perform the online kernel learning using th
 
 The ourput is as followings:
 
+0	10000	20000	30000	
+
+#Training Instances:32561
+
+Learn errRate: 0.19065754
+
+Learning time: 513.57000732 s
 
 
 The second line indicates the number of processed training samples until now, which can give an intuitive impression of the processing speed. This is a necessary output in the case when the training time is extremely long. The output includes the training accuracy, training time cost (including loading time), test time (including loading time).
 _________________________________________
 Parameter Setting:
+
+-lambda        (0.1)  regulizer for bogd
+
+-eta           (0.1)  learning rate
+
+-alpha         ( 1 )   alpha for SPA
+
+-beta          ( 3 )   beta for SPA
+
+-gamma         (0.99)   discount for Hedge
+
+-delta         (0.001)   smoothing parameter for stochastic update
+
+-k             (20)      nogd dimension
+
+-B             (100)     budget size
 
 ________________________________________
 Related links:
